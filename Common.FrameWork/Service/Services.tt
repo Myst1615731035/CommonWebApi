@@ -1,0 +1,59 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ assembly name="System.Data.DataSetExtensions.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ include file="$(ProjectDir)DbHelper.ttinclude"  #>
+<#@ include file="$(ProjectDir)ModelAuto.ttinclude"	#>
+<# var manager = new Manager(Host, GenerationEnvironment, true); #>
+
+
+<# 
+	var OutputPath =Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Host.TemplateFile+"..")+"..")+"..");
+	OutputPath=Path.Combine(OutputPath,"Common.Service","Services");
+	if (!Directory.Exists(OutputPath))
+	{
+	    Directory.CreateDirectory(OutputPath);
+	}
+#>
+<# 
+    foreach (var item in DbHelper.GetDbTablesNew(config.ConnectionString, config.DbDatabase,config.TableName))
+    {
+		string tableName = item.ToString();
+		manager.StartBlock(tableName+"Services"+".cs",OutputPath);#>
+using Common.IServices;
+using Common.Model.Entities;
+using Common.Repository;
+using Common.Service.Base;
+using SqlSugar;
+
+namespace Common.Service
+{	
+	/// <summary>
+	/// <#=tableName#>Services
+	/// </summary>	
+	public partial class <#=tableName#>Services : BaseService<<#=tableName#>>, I<#=tableName#>Services
+    {
+		IBaseRepository<<#=tableName#>> dal;
+		ISqlSugarClient db;
+        public <#=tableName#>Services(IBaseRepository<<#=tableName#>> _dal)
+        {
+            this.dal = _dal;
+            db = dal.Db;
+        }
+    }
+}
+<# 
+		manager.EndBlock(); 
+	} 
+	manager.Process(true);
+#> 
+

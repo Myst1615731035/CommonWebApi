@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bak\**" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="LogHelper\**" />
+    <Compile Remove="VerifyCode\**" />
+    <EmbeddedResource Remove="bak\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EmbeddedResource Remove="LogHelper\**" />
+    <EmbeddedResource Remove="VerifyCode\**" />
+    <None Remove="bak\**" />
+    <None Remove="Extensions\**" />
+    <None Remove="LogHelper\**" />
+    <None Remove="VerifyCode\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GoogleAuthenticator" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="NPOI" Version="2.5.6" />
+    <PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.5.22301.12" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0-preview.5.22301.12" />
+  </ItemGroup>
+
+</Project>

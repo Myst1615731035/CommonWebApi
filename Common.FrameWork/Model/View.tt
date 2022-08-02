@@ -1,0 +1,106 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ assembly name="System.Data.DataSetExtensions.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ include file="$(ProjectDir)DbHelper.ttinclude"  #>
+<#@ include file="$(ProjectDir)ModelAuto.ttinclude"	#>
+<# var manager = new Manager(Host, GenerationEnvironment, true); #>
+
+<# 
+	var OutputPath =Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Host.TemplateFile+"..")+"..")+"..");
+	OutputPath=Path.Combine(OutputPath,"Common.Model","Views");
+	if (!Directory.Exists(OutputPath))
+	{
+	    Directory.CreateDirectory(OutputPath);
+	}
+#>
+
+<#
+	string tableName = "";
+	foreach (var item in DbHelper.GetDbViews(config.ConnectionString, config.DbDatabase,config.TableName))
+    {
+		tableName = item.ToString();
+		manager.StartBlock(tableName+".cs",OutputPath);
+#>
+using System;
+using SqlSugar;
+namespace Common.Model.Views
+{
+	///<summary>
+	///<#=tableName#>
+	///</summary>
+	[SugarTable("<#=tableName#>")]
+	public partial class <#=tableName#>
+	{
+	<# foreach(DbColumn column in DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, tableName))
+	{	
+		#region 获取属性
+		Dictionary<string,object> dic = new Dictionary<string,object>();
+		if(column.IsPrimaryKey)
+		{
+			dic.Add("IsPrimaryKey", true);
+		}
+		if(column.IsIdentity)
+		{
+			dic.Add("IsIdentity", true);
+		}
+		if(!column.IsNullable)
+		{
+			dic.Add("IsNullable", false);
+		}
+		if(column.Remark != "" && column.Remark != null)
+		{
+			dic.Add("ColumnDescription", column.Remark.Replace("\r\n",""));
+		}
+		if(!string.IsNullOrWhiteSpace(column.ColumnType))
+		{
+			dic.Add("ColumnDataType",column.ColumnType.ToString());
+			if(column.ColumnType.ToString().ToLower() == "timestamp")
+			{
+				dic.Add("IsOnlyIgnoreInsert", true);
+				dic.Add("IsOnlyIgnoreUpdate", true);
+			}
+		}
+		#endregion
+		#region 拼接属性
+		string prop = "";
+        foreach(var d in dic)
+        {
+			if(d.Key == "ColumnDescription" || d.Key == "ColumnDataType")
+			{
+				prop += string.Format("{0} = \"{1}\",",d.Key,d.Value.ToString().ToLower());
+			}
+			else
+			{
+				prop += string.Format("{0} = {1},",d.Key,d.Value.ToString().ToLower());
+			}
+        }
+		if(prop != "")
+		{
+			prop = string.Format("[SugarColumn({0})]",prop.Trim().Substring(0,prop.Length - 1));
+		}
+		#endregion
+		#>
+	/// <summary>
+		/// <#= column.Remark == "" ? column.ColumnName : column.Remark.Replace("\r\n"," ") #>
+		/// </summary>
+		<#= prop == ""? "":prop #>
+		public <#= column.CSharpType #><#= column.CommonType.IsValueType && column.IsNullable?"?":"" #> <#= column.ColumnName #> { get; set; }
+	<#}#>}
+}
+
+
+<#
+		manager.EndBlock(); 
+	}
+manager.Process(true);
+#>
