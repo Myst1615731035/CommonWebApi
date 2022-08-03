@@ -72,7 +72,7 @@ namespace Common.Service.SysServices
             var permissions = await db.Queryable<Permission, RolePermissionButton>((p, rpb) => new JoinQueryInfos(JoinType.Inner, p.Id == rpb.PermissionId && !p.IsDelete))
                                         .Where((p, rpb) => roleIds.Contains(rpb.RoleId) && rpb.PermissionId != "" && rpb.PermissionId != null)
                                         .Select((p, rpb) => p)
-                                        .Distinct().ToListAsync();
+                                        .Distinct().OrderBy(p=>p.Sort).ToListAsync();
             var buttons = await db.Queryable<Button, RolePermissionButton>((b, rpb) => new JoinQueryInfos(JoinType.Inner, b.Id == rpb.ButtonId && !b.IsDelete))
                                         .Where((b, rpb) => roleIds.Contains(rpb.RoleId) && rpb.ButtonId != "" && rpb.ButtonId != null)
                                         .Select((b, rpb) => b)
@@ -88,7 +88,7 @@ namespace Common.Service.SysServices
             var list = permissions.ToTree(
                                 (r, c) => { return c.Pid == ""; },
                                 (r, c) => { return r.Id == c.Pid; },
-                                (r, dataList) => { r.Childern.AddRange(dataList); }
+                                (r, dataList) => { r.Children.AddRange(dataList); }
                                 );
 
             return list;

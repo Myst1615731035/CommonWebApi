@@ -28,6 +28,6 @@ namespace Common.Model.SysModels
         public List<Button> Buttons { get; set; } = new List<Button>();
 
         [SugarColumn(IsIgnore = true)]
-        public List<Permission> Childern { get; set; } = new List<Permission>();
+        public List<Permission> Children { get; set; } = new List<Permission>();
     }
 }
