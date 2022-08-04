@@ -1,4 +1,4 @@
-using Common.IService;
+using Common.IServices;
 using Common.Model.SysModels;
 using Common.Repository;
 using Common.Service.Base;
@@ -7,13 +7,13 @@ using SqlSugar;
 namespace Common.Service
 {
     /// <summary>
-    /// PermissionServices
+    /// ButtonServices
     /// </summary>	
-    public partial class PermissionServices : BaseService<Permission>, IPermissionServices
+    public partial class ButtonServices : BaseService<Button>, IButtonServices
     {
-        IBaseRepository<Permission> dal;
+        IBaseRepository<Button> dal;
         ISqlSugarClient db;
-        public PermissionServices(IBaseRepository<Permission> _dal)
+        public ButtonServices(IBaseRepository<Button> _dal)
         {
             dal = _dal;
             db = dal.Db;

@@ -4,9 +4,9 @@ using Common.Repository;
 namespace Common.IRepository
 {
     /// <summary>
-    /// ISysRepository
+    /// IButtonRepository
     /// </summary>	
-    public partial interface ISysUserRepository : IBaseRepository<SysUser>//类名
+    public partial interface IButtonRepository : IBaseRepository<Button>//类名
     {
     }
 }

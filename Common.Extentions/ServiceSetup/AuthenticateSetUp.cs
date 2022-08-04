@@ -1,4 +1,5 @@
-﻿using Common.Utils;
+﻿using Common.Extentions.Authorization;
+using Common.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;

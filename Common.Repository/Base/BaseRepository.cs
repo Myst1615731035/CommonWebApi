@@ -447,13 +447,13 @@ namespace Common.Repository
             if (pageModel.isAll)
             {
                 var data = await list.ToListAsync();
-                pageModel.data = data;
+                pageModel.response = data;
                 pageModel.total = data.Count;
                 pageModel.pageCount = 1;
             }
             else
             {
-                pageModel.data = await list.ToPageListAsync(pageModel.currentPage, pageModel.pageSize, totalCount);
+                pageModel.response = await list.ToPageListAsync(pageModel.currentPage, pageModel.pageSize, totalCount);
                 int pageCount = (Math.Ceiling(totalCount.ObjToDecimal() / pageModel.pageSize.ObjToDecimal())).ObjToInt();
                 pageModel.total = totalCount;
                 pageModel.pageCount = pageCount;
@@ -507,13 +507,13 @@ namespace Common.Repository
             if (page.isAll)
             {
                 var data = await list.ToListAsync();
-                page.data = data;
+                page.response = data;
                 page.total = data.Count;
                 page.pageCount = 1;
             }
             else
             {
-                page.data = await list.ToPageListAsync(page.currentPage, page.pageSize, totalCount);
+                page.response = await list.ToPageListAsync(page.currentPage, page.pageSize, totalCount);
                 int pageCount = (Math.Ceiling(totalCount.ObjToDecimal() / page.pageSize.ObjToDecimal())).ObjToInt();
                 page.total = totalCount;
                 page.pageCount = pageCount;

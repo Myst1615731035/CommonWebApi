@@ -1,7 +1,7 @@
 using Common.Model.SysModels;
-using Common.Repository.ISysRepositories;
+using Common.IRepository;
 
-namespace Common.Repository.SysRepositories
+namespace Common.Repository
 {
     /// <summary>
     /// PermissionRepository

@@ -1,4 +1,4 @@
-﻿using Common.IService.ISysServices;
+﻿using Common.IService;
 using Common.Model.ApiModel;
 using Common.Utils;
 using Microsoft.AspNetCore.Authorization;

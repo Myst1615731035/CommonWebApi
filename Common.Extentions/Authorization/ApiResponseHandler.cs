@@ -6,8 +6,11 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text.Encodings.Web;
 
-namespace Common.Extentions.Setup
+namespace Common.Extentions.Authorization
 {
+    /// <summary>
+    /// 权限错误返回
+    /// </summary>
     public class ApiResponseHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         public ApiResponseHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
@@ -22,14 +25,14 @@ namespace Common.Extentions.Setup
         {
             Response.ContentType = "application/json";
             Response.StatusCode = StatusCodes.Status401Unauthorized;
-            await Response.WriteAsync(JsonConvert.SerializeObject((new ApiResponse(StatusCode.CODE401)).MessageModel));
+            await Response.WriteAsync(JsonConvert.SerializeObject(new ApiResponse(StatusCode.CODE401).MessageModel));
         }
 
         protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)
         {
             Response.ContentType = "application/json";
             Response.StatusCode = StatusCodes.Status403Forbidden;
-            await Response.WriteAsync(JsonConvert.SerializeObject((new ApiResponse(StatusCode.CODE403)).MessageModel));
+            await Response.WriteAsync(JsonConvert.SerializeObject(new ApiResponse(StatusCode.CODE403).MessageModel));
         }
     }
 }

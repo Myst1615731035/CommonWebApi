@@ -1,7 +1,7 @@
 using Common.IService.Base;
 using Common.Model.SysModels;
 
-namespace Common.IService.ISysServices
+namespace Common.IService
 {
     /// <summary>
     /// PermissionServices

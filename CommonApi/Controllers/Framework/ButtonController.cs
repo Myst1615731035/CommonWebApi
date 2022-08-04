@@ -1,4 +1,4 @@
-using Common.IService;
+using Common.IServices;
 using Common.Model.ApiModel;
 using Common.Model.SysModels;
 using Common.Utils;
@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
 
-namespace CommonApi.Controllers
+namespace CommonApi.Controllers.Framework
 {
     /// <summary>
-    /// SysController
+    /// ButtonController
     /// </summary>	
-    [Authorize]
-    [ApiController]
     [Route("api/[controller]/[action]")]
-    public class SysUserController : ControllerBase
+    [ApiController]
+    [Authorize]
+    public class ButtonController : ControllerBase
     {
         #region 接口构造
-        private readonly ISysUserServices _service;
+        private readonly IButtonServices _service;
         private readonly IUser _user;
-        private readonly ILogger<PermissionController> _logger;
+        private readonly ILogger<ButtonController> _logger;
 
         /// <summary>
         /// 构造函数
@@ -27,64 +27,11 @@ namespace CommonApi.Controllers
         /// <param name="service"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public SysUserController(ISysUserServices service, IUser user, ILogger<PermissionController> logger)
+        public ButtonController(IButtonServices service, IUser user, ILogger<ButtonController> logger)
         {
             _service = service;
             _user = user;
             _logger = logger;
-        }
-        #endregion
-
-        #region 用户信息
-        /// <summary>
-        /// 获取用户基本信息
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<ContentJson<object>> GetInfoByToken([FromBody] dynamic param)
-        {
-            var res = new ContentJson<object>() { msg = "用户信息获取失败" };
-            string token = param.token;
-            if (token.IsNotEmptyOrNull())
-            {
-                var model = JwtHelper.SerializeJwt(token);
-                if (model.IsNotEmptyOrNull() && model.Uid.IsNotEmptyOrNull())
-                {
-                    var user = await _service.GetUserInfo(model.Uid.ObjToString());
-                    if (user.IsNotEmptyOrNull())
-                    {
-                        res = new ContentJson<object>()
-                        {
-                            success = true,
-                            msg = "获取成功",
-                            data = user
-                        };
-                    }
-                }
-            }
-            return res;
-        }
-
-        /// <summary>
-        /// 获取用户权限数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ContentJson<object>> GetUserAuth()
-        {
-            var res = new ContentJson<object>() { msg = "用户权限获取失败" };
-            if (_user.ID.IsNotEmptyOrNull())
-            {
-                res = new ContentJson<object>()
-                {
-                    success = true,
-                    msg = "获取成功",
-                    data = await _service.GetUserAuth(_user.ID)
-                };
-            }
-            return res;
         }
         #endregion
 
@@ -97,7 +44,7 @@ namespace CommonApi.Controllers
         [HttpPost]
         public async Task<ContentJson<Pagination>> GetList([FromBody] Pagination pagination)
         {
-            var exp = Expressionable.Create<SysUser>();
+            var exp = Expressionable.Create<Button>();
             // 增加查询条件
 
             var list = await _service.QueryPage(exp.ToExpression(), pagination);
@@ -117,7 +64,7 @@ namespace CommonApi.Controllers
         [HttpPost]
         public async Task<ContentJson<object>> GetEntity([FromBody] object id)
         {
-            var exp = Expressionable.Create<SysUser>();
+            var exp = Expressionable.Create<Button>();
             // 增加查询条件
 
             var entity = await _service.QueryById(id);
@@ -137,7 +84,7 @@ namespace CommonApi.Controllers
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ContentJson<string>> SaveEntity([FromBody] SysUser entity)
+        public async Task<ContentJson<string>> SaveEntity([FromBody] Button entity)
         {
             //结果定义
             var result = new ContentJson<string>()
@@ -177,7 +124,7 @@ namespace CommonApi.Controllers
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ContentJson<string>> Delete([FromBody] SysUser entity)
+        public async Task<ContentJson<string>> Delete([FromBody] Button entity)
         {
             //结果定义
             var result = new ContentJson<string>()

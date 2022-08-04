@@ -4,11 +4,11 @@ using Common.IRepository;
 namespace Common.Repository
 {
     /// <summary>
-    /// SysRepository
+    /// ButtonRepository
     /// </summary>	
-    public partial class SysUserRepository : BaseRepository<SysUser>, ISysUserRepository
+    public partial class ButtonRepository : BaseRepository<Button>, IButtonRepository
     {
-        public SysUserRepository() : base()
+        public ButtonRepository() : base()
         {
         }
     }

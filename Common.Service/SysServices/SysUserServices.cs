@@ -1,11 +1,11 @@
-using Common.IService.ISysServices;
+using Common.IService;
 using Common.Model.SysModels;
 using Common.Repository;
 using Common.Service.Base;
 using Common.Utils;
 using SqlSugar;
 
-namespace Common.Service.SysServices
+namespace Common.Service
 {
     /// <summary>
     /// SysUserServices

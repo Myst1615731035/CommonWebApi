@@ -1,7 +1,7 @@
 using Common.Model.SysModels;
 using Common.Repository;
 
-namespace Common.Repository.ISysRepositories
+namespace Common.IRepository
 {
     /// <summary>
     /// IPermissionRepository

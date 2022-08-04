@@ -46,12 +46,12 @@ namespace Common.Model.ApiModel
         /// <summary>
         /// 返回数据
         /// </summary>
-        public object data { get; set; }
+        public object? response { get; set; }
 
         /// <summary>
         /// 其他数据内容
         /// </summary>
-        public object other { get; set; }
+        public object? other { get; set; }
     }
 
     public class Option

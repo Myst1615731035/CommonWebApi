@@ -143,6 +143,11 @@ namespace Common.Utils
             var dto = DateTimeOffset.FromUnixTimeMilliseconds(unix);
             return dto.ToLocalTime().DateTime;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static DateTime StampToDateTime(string time)
         {
             time = time.Substring(0, 10);

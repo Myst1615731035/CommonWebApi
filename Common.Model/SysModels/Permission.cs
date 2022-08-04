@@ -12,6 +12,9 @@ namespace Common.Model.SysModels
         [SugarColumn(IsNullable = false, ColumnDescription = "父级主键，最顶级菜单的父级ID为空字符串", ColumnDataType = "varchar", Length = 50, DefaultValue = "")]
         public string Pid { get; set; }
 
+        [SugarColumn(IsNullable = true, ColumnDescription = "数据查询的接口ID", ColumnDataType = "varchar", Length = 50)]
+        public string Fid { get; set; }
+
         [SugarColumn(IsNullable = false, ColumnDescription = "菜单名称", ColumnDataType = "varchar", Length = 50)]
         public string Name { get; set; }
 

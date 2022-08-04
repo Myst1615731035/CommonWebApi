@@ -18,7 +18,7 @@
 
 <# 
 	var OutputPath =Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Host.TemplateFile+"..")+"..")+"..");
-	OutputPath=Path.Combine(OutputPath,"Common.IService","IServices");
+	OutputPath=Path.Combine(OutputPath,"Common.Service","IServices");
 	if (!Directory.Exists(OutputPath))
 	{
 	    Directory.CreateDirectory(OutputPath);

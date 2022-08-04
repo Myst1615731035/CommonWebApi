@@ -2,7 +2,7 @@ using Common.IService.Base;
 using Common.Model.SysModels;
 using Common.Utils;
 
-namespace Common.IService.ISysServices
+namespace Common.IService
 {
     /// <summary>
     /// ISysServices
